@@ -1,26 +1,25 @@
 {% set name = "centrally-managed-conda" %}
 {% set version = "0.2" %}
-{% set sha256 = "fd80f8e0a6ea23be32b5c3df16f9d8bc2a01117d57a3e5a8c09f95e31801b430" %}
 
 package:
     name: {{ name|lower }}
     version: {{ version }}
 
 source:
-    fn: {{ name }}-{{ version }}.tar.gz
     url: https://github.com/SciTools-incubator/{{ name }}/archive/v{{ version }}.tar.gz
-    sha256: {{ sha256 }}
+    sha256: fd80f8e0a6ea23be32b5c3df16f9d8bc2a01117d57a3e5a8c09f95e31801b430
 
 build:
     number: 1002
-    script: python setup.py install --single-version-externally-managed --record=record.txt
+    noarch: python
+    script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
     host:
-        - python
-        - setuptools
+        - python >=3.6
+        - pip
     run:
-        - python
+        - python >=3.6
         - conda-build
         - gitpython
         - conda-build-all
